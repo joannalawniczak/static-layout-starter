@@ -1,0 +1,18 @@
+{
+  "name": "static-layout-starter",
+  "version": "0.0.1",
+  "description": "Scaffolding for static layout.",
+  "scripts": {
+    "build": "./node_modules/.bin/gulp build",
+    "build:debug": "./node_modules/.bin/gulp build:debug",
+    "lint": "./node_modules/.bin/gulp lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "static",
+    "layout",
+    "starter"
+  ],
+  "author": "Joanna Ławniczak <lawniczak.joanna@gmail.com>",
+  "license": "MIT"
+}
