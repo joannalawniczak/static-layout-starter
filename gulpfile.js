@@ -16,6 +16,7 @@ const rollupNodeResolve = require( 'rollup-plugin-node-resolve' );
 const rollupCommonjs = require( 'rollup-plugin-commonjs' );
 const rollupBabel = require( 'rollup-plugin-babel' );
 const rollupUglify = require( 'rollup-plugin-uglify' );
+const KarmaServer = require( 'karma' ).Server;
 
 /**
  * Paths definitions.
@@ -185,6 +186,17 @@ const tasks = {
 			.pipe( gulpEslint() )
 			.pipe( gulpEslint.format() )
 			.pipe( gulpEslint.failAfterError() );
+	},
+
+	/**
+	 * Runs JS unit tests.
+	 *
+	 * @param {Function} done Finish callback.
+	 */
+	test( done ) {
+		new KarmaServer( {
+			configFile: __dirname + '/karma.conf.js'
+		}, done ).start();
 	}
 };
 
@@ -226,3 +238,6 @@ gulp.task( 'build', ( done ) => runSequence( 'clean', [ 'styles', 'scripts', 'im
 // JS code sniffer.
 gulp.task( 'lint', tasks.lint );
 gulp.task( 'pre-commit', tasks.lintStaged );
+
+// JS unit tests.
+gulp.task( 'test', tasks.test );
