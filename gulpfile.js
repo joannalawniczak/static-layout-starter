@@ -5,10 +5,12 @@ const path = require( 'path' );
 const del = require( 'del' );
 const runSequence = require( 'run-sequence' );
 const gulp = require( 'gulp' );
+const gulpFilter = require( 'gulp-filter' );
 const gulpIf = require( 'gulp-if' );
 const gulpSass = require( 'gulp-sass' );
 const gulpCssnano = require( 'gulp-cssnano' );
 const gulpAutoprefixer = require( 'gulp-autoprefixer' );
+const gulpEslint = require( 'gulp-eslint' );
 const rollup = require( 'rollup' ).rollup;
 const rollupNodeResolve = require( 'rollup-plugin-node-resolve' );
 const rollupCommonjs = require( 'rollup-plugin-commonjs' );
@@ -20,6 +22,7 @@ const rollupUglify = require( 'rollup-plugin-uglify' );
  */
 const src = './assets/src';
 const dest = './assets/dist';
+const jsFiles = [ '**/*.js' ].concat( getGitIgnore() );
 
 const config = {
 	styles: {
@@ -155,6 +158,33 @@ const tasks = {
 	watch() {
 		gulp.watch( config.styles.src, gulp.series( 'styles:debug' ) );
 		gulp.watch( config.scripts.src, gulp.series( 'scripts:debug' ) );
+	},
+
+	/**
+	 * Analyze quality and code style of JS files.
+	 *
+	 * @returns {Stream}
+	 */
+	lint() {
+		return gulp.src( jsFiles )
+			.pipe( gulpEslint() )
+			.pipe( gulpEslint.format() )
+			.pipe( gulpEslint.failAfterError() );
+	},
+
+	/**
+	 * Lints staged files - pre commit hook.
+	 *
+	 * @returns {Stream}
+	 */
+	lintStaged() {
+		const guppy = require( 'git-guppy' )( gulp );
+
+		return guppy.stream( 'pre-commit', { base: './' } )
+			.pipe( gulpFilter( jsFiles ) )
+			.pipe( gulpEslint() )
+			.pipe( gulpEslint.format() )
+			.pipe( gulpEslint.failAfterError() );
 	}
 };
 
@@ -185,10 +215,14 @@ gulp.task( 'styles:debug', () => tasks.styles( { debug: true } ) );
 gulp.task( 'scripts:debug', () => tasks.scripts( { debug: true } ) );
 gulp.task( 'images:debug', () => tasks.images( { debug: true } ) );
 gulp.task( 'watch:debug', tasks.watch );
-gulp.task( 'build:debug', ( done ) => runSequence( 'clean', [ 'styles:debug', 'scripts:debug', 'images:debug' ], 'watch:debug' ) );
+gulp.task( 'build:debug', () => runSequence( 'clean', [ 'styles:debug', 'scripts:debug', 'images:debug' ], 'watch:debug' ) );
 
 // Production build.
 gulp.task( 'styles', tasks.styles );
 gulp.task( 'scripts', tasks.scripts );
 gulp.task( 'images', tasks.images );
 gulp.task( 'build', ( done ) => runSequence( 'clean', [ 'styles', 'scripts', 'images' ], done ) );
+
+// JS code sniffer.
+gulp.task( 'lint', tasks.lint );
+gulp.task( 'pre-commit', tasks.lintStaged );
