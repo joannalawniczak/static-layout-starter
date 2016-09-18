@@ -7,6 +7,7 @@ const runSequence = require( 'run-sequence' );
 const gulp = require( 'gulp' );
 const gulpFilter = require( 'gulp-filter' );
 const gulpIf = require( 'gulp-if' );
+const gulpSym = require( 'gulp-sym' );
 const gulpSass = require( 'gulp-sass' );
 const gulpCssnano = require( 'gulp-cssnano' );
 const gulpAutoprefixer = require( 'gulp-autoprefixer' );
@@ -34,7 +35,7 @@ const config = {
 
 	images: {
 		src: path.join( src, 'images' ),
-		dest
+		dest: path.join( dest, 'images' ),
 	},
 
 	scripts: {
@@ -57,7 +58,7 @@ const utils = {
 	 */
 	symlink( from, to ) {
 		return gulp.src( from )
-			.pipe( gulp.symlink( to ) );
+			.pipe( gulpSym( to, { force: true } ) );
 	},
 
 	/**
@@ -150,15 +151,15 @@ const tasks = {
 			return utils.copy( from, to );
 		}
 
-		return utils.symlink( config.images.src, dest );
+		return utils.symlink( config.images.src, config.images.dest );
 	},
 
 	/**
 	 * Watches source files and run development build on change.
 	 */
 	watch() {
-		gulp.watch( config.styles.src, gulp.series( 'styles:debug' ) );
-		gulp.watch( config.scripts.src, gulp.series( 'scripts:debug' ) );
+		gulp.watch( config.styles.src, () => tasks.styles( { debug: true } ) );
+		gulp.watch( config.scripts.src, () => tasks.scripts( { debug: true } ) );
 	},
 
 	/**
