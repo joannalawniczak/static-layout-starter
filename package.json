@@ -2,6 +2,10 @@
   "name": "static-layout-starter",
   "version": "0.0.1",
   "description": "Scaffolding for static layout.",
+  "repository": {
+    "type" : "git",
+    "url" : "git@github.com:joannalawniczak/static-layout-starter.git"
+  },
   "scripts": {
     "build": "./node_modules/.bin/gulp build",
     "build:debug": "./node_modules/.bin/gulp build:debug",
