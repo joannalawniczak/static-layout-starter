@@ -2,6 +2,8 @@
   "name": "static-layout-starter",
   "version": "0.0.1",
   "description": "Scaffolding for static layout.",
+  "author": "Joanna Ławniczak <lawniczak.joanna@gmail.com>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:joannalawniczak/static-layout-starter.git"
@@ -17,8 +19,6 @@
     "layout",
     "starter"
   ],
-  "author": "Joanna Ławniczak <lawniczak.joanna@gmail.com>",
-  "license": "MIT",
   "devDependencies": {
     "babel-preset-es2015-rollup": "^1.2.0",
     "chai": "^3.5.0",
