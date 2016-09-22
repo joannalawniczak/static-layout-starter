@@ -167,8 +167,8 @@ const tasks = {
 	 * Watches source files and run development build on change.
 	 */
 	watch() {
-		gulp.watch( config.styles.src, () => tasks.styles( { debug: true } ) );
-		gulp.watch( config.scripts.src, () => tasks.scripts( { debug: true } ) );
+		gulp.watch( config.styles.src, [ 'styles:debug' ] );
+		gulp.watch( config.scripts.src, [ 'scripts:debug' ] );
 	},
 
 	/**
