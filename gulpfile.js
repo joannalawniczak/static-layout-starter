@@ -141,25 +141,26 @@ const tasks = {
 	},
 
 	/**
-	 * Copies images from src to dist.
+	 * Copies static files.
 	 *
+	 * @param {String} src Source path.
+	 * @param {String} dest Destination path.
 	 * @param {Object} [options={}] Additional options.
-	 * @param {Boolean} [options.debug] When `true` then `dist/images` will be a symlink to `src/images`.
+	 * @param {Boolean} [options.debug] When `true` then `dist` will be a symlink to `src`.
 	 * @returns {Stream}
 	 */
-	images( options = {} ) {
-		if ( !isFileExist( config.images.src ) ) {
+	staticFiles( src, dest, options = {} ) {
+		if ( !isFileExist( src ) ) {
 			return Promise.resolve();
 		}
 
 		if ( !options.debug ) {
-			const from = path.join( config.images.src, '**', '*.*' );
-			const to = path.join( dest, 'images' );
+			const from = path.join( src, '**', '*.*' );
 
-			return utils.copy( from, to );
+			return utils.copy( from, dest );
 		}
 
-		return utils.symlink( config.images.src, config.images.dest );
+		return utils.symlink( src, dest );
 	},
 
 	/**
@@ -250,14 +251,14 @@ gulp.task( 'clean', () => utils.clean( dest ) );
 // Development build.
 gulp.task( 'styles:debug', () => tasks.styles( { debug: true } ) );
 gulp.task( 'scripts:debug', () => tasks.scripts( { debug: true } ) );
-gulp.task( 'images:debug', () => tasks.images( { debug: true } ) );
+gulp.task( 'images:debug', () => tasks.staticFiles( config.images.src, config.images.dest, { debug: true } ) );
 gulp.task( 'watch:debug', tasks.watch );
 gulp.task( 'build:debug', () => runSequence( 'clean', [ 'styles:debug', 'scripts:debug', 'images:debug' ], 'watch:debug' ) );
 
 // Production build.
 gulp.task( 'styles', tasks.styles );
 gulp.task( 'scripts', tasks.scripts );
-gulp.task( 'images', tasks.images );
+gulp.task( 'images', () => tasks.staticFiles( config.images.src, config.images.dest ) );
 gulp.task( 'build', ( done ) => runSequence( 'clean', [ 'styles', 'scripts', 'images' ], done ) );
 
 // JS code sniffer.
