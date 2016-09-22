@@ -1,5 +1,7 @@
 # Static layout starter
 
+[![devDependency Status](https://david-dm.org/joannalawniczak/static-layout-starter/dev-status.svg)](https://david-dm.org/joannalawniczak/static-layout-starter?type=dev)
+
 Scaffolding for static layouts.
 
 ## Tech stack
