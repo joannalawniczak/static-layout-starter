@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "Scaffolding for static layout.",
   "repository": {
-    "type" : "git",
-    "url" : "git@github.com:joannalawniczak/static-layout-starter.git"
+    "type": "git",
+    "url": "git@github.com:joannalawniczak/static-layout-starter.git"
   },
   "scripts": {
     "build": "./node_modules/.bin/gulp build",
@@ -41,7 +41,7 @@
     "karma-rollup-preprocessor": "^2.0.2",
     "karma-sinon": "^1.0.5",
     "mocha": "^3.0.2",
-    "rollup": "^0.35.11",
+    "rollup": "^0.36.0",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-commonjs": "^5.0.0",
     "rollup-plugin-node-resolve": "^2.0.0",
