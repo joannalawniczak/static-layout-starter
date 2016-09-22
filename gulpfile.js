@@ -111,7 +111,11 @@ const tasks = {
 	 * @returns {Stream}
 	 */
 	scripts( options = {} ) {
-		let rollupPlugins = [
+		if ( !isFileExist( config.scripts.entry ) ) {
+			return Promise.resolve();
+		}
+
+		const rollupPlugins = [
 			rollupBabel( {
 				exclude: 'node_modules/**',
 				presets: [ 'es2015-rollup' ]
@@ -144,6 +148,10 @@ const tasks = {
 	 * @returns {Stream}
 	 */
 	images( options = {} ) {
+		if ( !isFileExist( config.images.src ) ) {
+			return Promise.resolve();
+		}
+
 		if ( !options.debug ) {
 			const from = path.join( config.images.src, '**', '*.*' );
 			const to = path.join( dest, 'images' );
@@ -210,7 +218,7 @@ function getGitIgnore() {
 	let gitIgnoredFiles = fs.readFileSync( '.gitignore', 'utf8' );
 
 	return gitIgnoredFiles
-	// Remove comment lines.
+		// Remove comment lines.
 		.replace( /^#.*$/gm, '' )
 		// Transform into array.
 		.split( /\n+/ )
@@ -218,6 +226,22 @@ function getGitIgnore() {
 		.filter( ( path ) => !!path )
 		// Add `!` for ignore glob.
 		.map( i => '!' + i );
+}
+
+/**
+ * Checks if file in specified locarion exist.
+ *
+ * @param {String} path File path
+ * @returns {Boolean}
+ */
+function isFileExist( path ) {
+	try {
+		fs.accessSync( path );
+	} catch ( e ) {
+		return false;
+	}
+
+	return true;
 }
 
 // Remove dist directory.
