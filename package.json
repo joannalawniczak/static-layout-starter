@@ -41,6 +41,7 @@
     "karma-rollup-preprocessor": "^2.0.2",
     "karma-sinon": "^1.0.5",
     "mocha": "^3.0.2",
+    "normalize-scss": "^5.0.3",
     "rollup": "^0.36.0",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-commonjs": "^5.0.0",
