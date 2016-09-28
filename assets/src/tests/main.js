@@ -1,5 +1,5 @@
-describe( 'Sample test', () => {
-	it( 'should work', () => {
-		expect( true ).to.true;
-	} );
-} );
+/**
+ * Tests bootstrap. Each test file needs to be imported in this file.
+ */
+
+import './mobile-navigation.js';
