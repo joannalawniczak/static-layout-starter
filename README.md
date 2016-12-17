@@ -15,6 +15,8 @@
 - `npm run build --watch` - watch files and rebuild on change
 - `npm run lint` - run ESLint
 - `npm test` - run JS unit tests
+- `npm test --watch`
+- `npm test --coverage`
 
 ## Note:
 The author of JavaScript code is [Oskar Wróbel](https://github.com/oskarwrobel).
