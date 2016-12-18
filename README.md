@@ -10,13 +10,17 @@
 - production and development build
 
 ## Tasks
-- `npm run build` - production build
-- `npm run build --debug` - development build
-- `npm run build --watch` - watch files and rebuild on change
-- `npm run lint` - run ESLint
-- `npm test` - run JS unit tests
-- `npm test --watch`
-- `npm test --coverage`
+- `gulp build` - production build
+- `gulp build --debug` - development build
+- `gulp build -d` - development build
+- `gulp build --watch` - watch files and rebuild on change
+- `gulp build -w` - watch files and rebuild on change
+- `gulp lint` - run ESLint
+- `gulp test` - run JS unit tests
+- `gulp test --watch` - watch tests and automatically rerun on change
+- `gulp test -w` - watch tests and automatically rerun on change
+- `gulp test --coverage` - generate code coverage
+- `gulp test -c` - generate code coverage
 
 ## Note:
 The author of JavaScript code is [Oskar Wróbel](https://github.com/oskarwrobel).
